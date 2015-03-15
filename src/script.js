@@ -8,10 +8,16 @@ $(document).ready(function(){
 
   // Get product/price info & store in items
   $.getJSON( "menu", function( data ) {
+    // instantiate coffee shop with this data
+    console.log(data);
+    myShop = new CoffeeShop(data[0]);
     i=0;
     var items = [];
+    var products = [];
+
     $.each( data[0], function( key, val ) {
       items.push( "<li id='" + i + "'>" + key + ": " + val + "</li>" );
+      products[key]=val;
       i++;
     });
    
