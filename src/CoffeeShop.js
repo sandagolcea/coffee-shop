@@ -1,25 +1,26 @@
-function CoffeeShop (menu) {
+function CoffeeShop (shopData) {
   // order = [{"coffee": 2}, 
   // {"tea": 1}, 
   // {"brownie": 1}]
+  this.shopName = shopData.shopName;
+  this.address = shopData.address;
+  this.prices = shopData.prices[0];
+  
   this.order = [];
-  this.menu = menu;
   this.total=0;
   this.tax = 8.64;
 };
 
 CoffeeShop.prototype.hasItem = function(item) {
-  if (this.menu[item]) 
-    return true;
-  else
-    return false;
+  return this.prices.hasOwnProperty(item);
 };
 
 CoffeeShop.prototype.addItem = function(item) {
-  if (this.menu[item]) {
-    this.order[item] ? this.order[item]+=1 : this.order[item]=1;
+  if (this.prices[item]) {
+    this.order[item] ? this.order[item]++ : this.order[item]=1;
     return true;
   } else {
+    // TODO: throw error
     return false;
   }
 };
@@ -34,19 +35,20 @@ CoffeeShop.prototype.showOrder = function() {
   }
 };
 
-CoffeeShop.prototype.getTotal = function() {
-  // this.order[key] returns item quantity
-  // this.order[key] returns item price
-  for (var key in this.order) {
-    this.total += this.order[key] * this.menu[key];
+CoffeeShop.prototype._getTotalBeforeTax = function() {
+  // this.order[item] returns item quantity
+  // this.order[item] returns item price
+  for (var item in this.order) {
+    this.total += this.order[item] * this.prices[item];
   }
 };
 
 CoffeeShop.prototype.getTotalAfterTax = function(){
+  this._getTotalBeforeTax(); 
   var tax = (8.64*this.total) / 100;
-  tax = this._strip(tax);
-  console.log("Total=" + this.total);
-  console.log("With Tax=" + (this.total - tax));
+  totalAfterTax = this.total + tax;
+  totalAfterTax = this._strip(totalAfterTax);
+  return totalAfterTax;
 }
 
 CoffeeShop.prototype._strip = function (number) {

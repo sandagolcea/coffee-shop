@@ -1,29 +1,25 @@
+// Creates the menu view with buttons for adding items to the order
 $(document).ready(function(){
-  // Getting basic store info
-  $.get( "menu.json", function( data ) {
-    $( "body" )
-      .append( "<p><strong>Shop Name: " + data[0].shopName + "</p></strong>") 
-      .append( "Address: " + data[0].address ); 
-  }, "json" );
 
-  // Get product/price info & store in items
-  $.getJSON( "menu", function( data ) {
-    // instantiate coffee shop with this data
-    console.log(data);
-    myShop = new CoffeeShop(data[0]);
-    i=0;
+  $.getJSON( "menu.json", function( data ) {
+    var myShop = new CoffeeShop(data[0]);
+    $( "#resto-name" ).text(myShop.shopName);
+    $( "#resto-address" ).text(myShop.address);
+    
     var items = [];
-    var products = [];
 
-    $.each( data[0], function( key, val ) {
-      items.push( "<li id='" + i + "'>" + key + ": " + val + "</li>" );
-      products[key]=val;
-      i++;
+    $.each( myShop.prices, function( key, val ) {
+      items.push( "<li><button type='button' value='"+key+"'>" + key + ": " + val + "</button></li>" );
     });
    
     $( "<ul/>", {
-      "class": "my-new-list",
+      "class": "product-buttons",
       html: items.join( "" )
     }).appendTo( "body" );
+
+    $(".product-buttons").find('button').click( function () {
+      myShop.addItem($(this).val());
+      myShop.showOrder();
+    });
   });
 });
