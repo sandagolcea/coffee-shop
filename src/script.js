@@ -1,6 +1,6 @@
 // Creates the menu view with buttons for adding items to the order
 $(document).ready(function(){
-
+  $('#add-payment-form').hide();
   $.getJSON( "menu.json", function( data ) {
     var myShop = new CoffeeShop(data[0]);
     $( "#resto-name" ).text(myShop.shopName);
@@ -27,11 +27,19 @@ $(document).ready(function(){
       }
       list +="</ul>";
       
-      console.log(list);
       $( ".receipt-items" ).replaceWith(list);
       var total = myShop.getTotalAfterTax();
       $("#receipt-total").replaceWith("<pre id='receipt-total'>Tax: "+myShop.tax+"\nTotal: "+total+"</pre>");
+
+      $('#add-payment-form').show();
     });
 
+    $('#add-payment-form').click( function (event) {
+      event.preventDefault(); 
+      myShop.acceptPayment($('#payment').val());
+      $("#payment-total").replaceWith("<pre id='payment-total'>Payed: "+myShop.payment+"\nChange: "+myShop.change+"</pre>");
+    })
+
   });
+
 });

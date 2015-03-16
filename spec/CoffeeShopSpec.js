@@ -74,7 +74,8 @@ describe('Till', function () {
 
     it('should accept a payment and return the change', function () {
       coffeeShop.addItem("Single Espresso");
-      expect(coffeeShop.getChange(2.25)).toEqual(.20);
+      coffeeShop.acceptPayment(2.25)
+      expect(coffeeShop.change).toEqual(.20);
     });
 
   });

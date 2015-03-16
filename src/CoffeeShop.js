@@ -59,8 +59,8 @@ CoffeeShop.prototype.applyDiscount = function(discountPercentage) {
     this.discount = discountPercentage;
 }
 
-CoffeeShop.prototype.getChange = function(amountPayed) {
+CoffeeShop.prototype.acceptPayment = function(amountPayed) {
   this.getTotalAfterTax();
   this.payment = amountPayed;
-  return this.change = parseFloat((this.payment - this.total).toFixed(2));
+  this.change = parseFloat((this.payment - this.total).toFixed(2));
 }

@@ -11,8 +11,8 @@ app.use('/src', express.static(__dirname + '/src'));
 app.set('view engine','ejs');
 app.set('views', __dirname + '/views');
 
-app.get('/',function(request, response){
-  response.send('hello');
+app.get('/', function(request,response){
+  response.render('mainMenu');
 });
 
 app.get('/menu',function(request, response){
@@ -20,10 +20,6 @@ app.get('/menu',function(request, response){
     var menu = JSON.parse(data)
     response.send(menu[0].prices );  
   });
-});
-
-app.get('/main', function(request,response){
-  response.render('mainMenu');
 });
 
 app.listen(port, function(){
