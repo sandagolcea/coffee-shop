@@ -72,5 +72,27 @@ describe('Till', function () {
       expect(coffeeShop.getTotalAfterTax()).toEqual(28.74);
     });
 
+    it('should accept a payment and return the change', function () {
+      coffeeShop.addItem("Single Espresso");
+      expect(coffeeShop.getChange(2.25)).toEqual(.20);
+    });
+
+  });
+
+  describe('when adding discount', function () {
+    it('should accept a basic discount', function() {
+      coffeeShop.addItem("Tiramisu");
+      coffeeShop.applyDiscount(10);
+      expect(coffeeShop.discount).toEqual(10);
+    });
+
+    it('should appply the discount to the total', function() {
+      coffeeShop.addItem("Tiramisu");
+      totalBeforeDiscount = coffeeShop.getTotalAfterTax();
+      coffeeShop.applyDiscount(10);
+      totalAfterDiscount = coffeeShop.getTotalAfterTax();
+      expect(totalBeforeDiscount).toBeGreaterThan(totalAfterDiscount);
+    });
+
   });
 });
