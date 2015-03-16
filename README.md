@@ -1,5 +1,5 @@
 # Coffee Shop
-Javascript practice - a simple coffee shop with basic menu
+Javascript practice - a simple coffee shop till with basic menu
 
 # To run
 `git clone git@github.com:sandagolcea/coffee-shop.git`  

@@ -15,11 +15,23 @@ $(document).ready(function(){
     $( "<ul/>", {
       "class": "product-buttons",
       html: items.join( "" )
-    }).appendTo( "body" );
+    }).appendTo( ".left" );
 
     $(".product-buttons").find('button').click( function () {
       myShop.addItem($(this).val());
       myShop.showOrder();
+
+      var list = "<ul class='receipt-items'>";
+      for (var item in myShop.order) {
+        list +="<li value="+item+">"+myShop.order[item]+" X "+item+" - "+myShop.prices[item]+"</li>";
+      }
+      list +="</ul>";
+      
+      console.log(list);
+      $( ".receipt-items" ).replaceWith(list);
+      var total = myShop.getTotalAfterTax();
+      $("#receipt-total").replaceWith("<pre id='receipt-total'>Tax: "+myShop.tax+"\nTotal: "+total+"</pre>");
     });
+
   });
 });

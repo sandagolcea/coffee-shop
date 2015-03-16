@@ -1,4 +1,4 @@
-describe('Waiter', function () {
+describe('Till', function () {
   var coffeeShop;
 
   beforeEach(function(){
@@ -32,11 +32,11 @@ describe('Waiter', function () {
 
   describe('has a menu', function () {
     
-    it('with tea', function () {
+    it('with items provided', function () {
       expect(coffeeShop.hasItem("Tea")).toBe(true);
     });
 
-    it('without brownies', function () {
+    it('without other items', function () {
       expect(coffeeShop.hasItem("Brownie")).toBe(false);
     });
 
@@ -69,9 +69,7 @@ describe('Waiter', function () {
       coffeeShop.addItem("Tea");
       coffeeShop.addItem("Tiramisu");
       coffeeShop.addItem("Tiramisu");
-      coffeeShop.getTotalAfterTax();
-      coffeeShop.showOrder();
-      expect(coffeeShop.getTotalAfterTax()).toEqual(57);
+      expect(coffeeShop.getTotalAfterTax()).toEqual(28.74);
     });
 
   });

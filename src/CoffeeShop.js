@@ -1,14 +1,12 @@
 function CoffeeShop (shopData) {
-  // order = [{"coffee": 2}, 
-  // {"tea": 1}, 
-  // {"brownie": 1}]
   this.shopName = shopData.shopName;
   this.address = shopData.address;
   this.prices = shopData.prices[0];
   
-  this.order = [];
+  this.order = []; //order = [{"coffee": 2}, {"brownie": 1}];
   this.total=0;
-  this.tax = 8.64;
+  this.taxPercentage = 8.64;
+  this.tax=0;
 };
 
 CoffeeShop.prototype.hasItem = function(item) {
@@ -20,7 +18,6 @@ CoffeeShop.prototype.addItem = function(item) {
     this.order[item] ? this.order[item]++ : this.order[item]=1;
     return true;
   } else {
-    // TODO: throw error
     return false;
   }
 };
@@ -37,20 +34,15 @@ CoffeeShop.prototype.showOrder = function() {
 
 CoffeeShop.prototype._getTotalBeforeTax = function() {
   // this.order[item] returns item quantity
-  // this.order[item] returns item price
+  total=0;
   for (var item in this.order) {
-    this.total += this.order[item] * this.prices[item];
+    total += this.order[item] * this.prices[item];
   }
+  return total;
 };
 
 CoffeeShop.prototype.getTotalAfterTax = function(){
-  this._getTotalBeforeTax(); 
-  var tax = (8.64*this.total) / 100;
-  totalAfterTax = this.total + tax;
-  totalAfterTax = this._strip(totalAfterTax);
-  return totalAfterTax;
-}
-
-CoffeeShop.prototype._strip = function (number) {
-  return (parseFloat(number.toPrecision(2)));
+  this.total = this._getTotalBeforeTax(); 
+  this.tax = parseFloat( ((8.64*this.total) / 100).toFixed(2) );
+  return parseFloat((this.total + this.tax).toFixed(2));
 }
